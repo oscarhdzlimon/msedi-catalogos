@@ -5,6 +5,7 @@ import mx.gob.imss.edi.catalogos.security.RestAuthenticationEntryPoint;
 import mx.gob.imss.edi.catalogos.security.TransactionIdFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
@@ -16,7 +17,8 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtFilter,
             TransactionIdFilter transactionFilter, RestAuthenticationEntryPoint entryPoint) throws Exception {
-        return http.csrf(csrf -> csrf.disable())
+        return http.cors(Customizer.withDefaults())
+                .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(errors -> errors.authenticationEntryPoint(entryPoint))
                 .authorizeHttpRequests(auth -> auth

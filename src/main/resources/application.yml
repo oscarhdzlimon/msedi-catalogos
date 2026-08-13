@@ -42,4 +42,6 @@ management:
         enabled: true
 
 edi:
+  cors:
+    allowed-origins: ${EDI_CORS_ALLOWED_ORIGINS:http://localhost:4200,http://localhost:4201,http://10.166.0.120}
   time-zone: ${EDI_TIME_ZONE:America/Mexico_City}
