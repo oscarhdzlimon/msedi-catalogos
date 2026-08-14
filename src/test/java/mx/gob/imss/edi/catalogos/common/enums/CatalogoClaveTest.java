@@ -16,6 +16,6 @@ class CatalogoClaveTest {
 
     @Test
     void rechazaUnaClaveNoPermitida() {
-        assertThat(CatalogoClave.buscar("catalogo.evento")).isEmpty();
+        assertThat(CatalogoClave.buscar("catalogo-no-soportado")).isEmpty();
     }
 }

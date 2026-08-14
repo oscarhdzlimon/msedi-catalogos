@@ -75,15 +75,15 @@ Un catalogo valido sin registros activos devuelve HTTP `200` y `elementos: []`.
 
 | Clave de API | Tabla Postgres | Orden |
 | --- | --- | --- |
-| `clasif-incapacidad` | `catalogo.clasif_incapacidad` | `num_orden, id_clasif_incapacidad` |
-| `estatus` | `catalogo.estatus` | `des_estatus, id_estatus` |
-| `perfil` | `catalogo.perfil` | `des_perfil, id_perfil` |
-| `ramo-seguro` | `catalogo.ramo_seguro` | `num_orden, id_ramo_seguro` |
-| `tipo-documento` | `catalogo.tipo_documento` | `des_tipo_documento, id_tipo_documento` |
-| `tipo-estatus` | `catalogo.tipo_estatus` | `des_tipo_estatus, id_tipo_estatus` |
-| `tipo-identificacion` | `catalogo.tipo_identificacion` | `num_orden, id_tipo_identificacion` |
-| `tipo-incapacidad` | `catalogo.tipo_incapacidad` | `num_orden, id_tipo_incapacidad` |
-| `tipo-riesgo` | `catalogo.tipo_riesgo` | `num_orden, id_tipo_riesgo` |
+| `clasif-incapacidad` | `catalogo.edic_clasif_incapacidad` | `num_orden, id_clasif_incapacidad` |
+| `estatus` | `catalogo.edic_estatus` | `des_estatus, id_estatus` |
+| `perfil` | `catalogo.edic_perfil` | `des_perfil, id_perfil` |
+| `ramo-seguro` | `catalogo.edic_ramo_seguro` | `num_orden, id_ramo_seguro` |
+| `tipo-documento` | `catalogo.edic_tipo_documento` | `des_tipo_documento, id_tipo_documento` |
+| `tipo-estatus` | `catalogo.edic_tipo_estatus` | `des_tipo_estatus, id_tipo_estatus` |
+| `tipo-identificacion` | `catalogo.edic_tipo_identificacion` | `num_orden, id_tipo_identificacion` |
+| `tipo-incapacidad` | `catalogo.edic_tipo_incapacidad` | `num_orden, id_tipo_incapacidad` |
+| `tipo-riesgo` | `catalogo.edic_tipo_riesgo` | `num_orden, id_tipo_riesgo` |
 
 La clave se recibe en minusculas y kebab-case. No se aceptan alias, nombres de esquema ni nombres de tabla.
 

@@ -15,7 +15,7 @@ public interface CatalogoMapper {
                    num_orden as orden,
                    null::bigint as id_padre,
                    null::varchar as referencia
-              from catalogo.clasif_incapacidad
+              from catalogo.edic_clasif_incapacidad
              where ind_activo = true
              order by num_orden, id_clasif_incapacidad
             """)
@@ -28,7 +28,7 @@ public interface CatalogoMapper {
                    null::integer as orden,
                    id_tipo_estatus as id_padre,
                    null::varchar as referencia
-              from catalogo.estatus
+              from catalogo.edic_estatus
              where ind_activo = true
              order by des_estatus, id_estatus
             """)
@@ -41,7 +41,7 @@ public interface CatalogoMapper {
                    null::integer as orden,
                    null::bigint as id_padre,
                    null::varchar as referencia
-              from catalogo.perfil
+              from catalogo.edic_perfil
              where ind_activo = true
              order by des_perfil, id_perfil
             """)
@@ -54,7 +54,7 @@ public interface CatalogoMapper {
                    num_orden as orden,
                    null::bigint as id_padre,
                    null::varchar as referencia
-              from catalogo.ramo_seguro
+              from catalogo.edic_ramo_seguro
              where ind_activo = true
              order by num_orden, id_ramo_seguro
             """)
@@ -67,7 +67,7 @@ public interface CatalogoMapper {
                    null::integer as orden,
                    null::bigint as id_padre,
                    ref_formato as referencia
-              from catalogo.tipo_documento
+              from catalogo.edic_tipo_documento
              where ind_activo = true
              order by des_tipo_documento, id_tipo_documento
             """)
@@ -80,7 +80,7 @@ public interface CatalogoMapper {
                    null::integer as orden,
                    null::bigint as id_padre,
                    null::varchar as referencia
-              from catalogo.tipo_estatus
+              from catalogo.edic_tipo_estatus
              where ind_activo = true
              order by des_tipo_estatus, id_tipo_estatus
             """)
@@ -93,7 +93,7 @@ public interface CatalogoMapper {
                    num_orden as orden,
                    null::bigint as id_padre,
                    null::varchar as referencia
-              from catalogo.tipo_identificacion
+              from catalogo.edic_tipo_identificacion
              where ind_activo = true
              order by num_orden, id_tipo_identificacion
             """)
@@ -106,7 +106,7 @@ public interface CatalogoMapper {
                    num_orden as orden,
                    null::bigint as id_padre,
                    null::varchar as referencia
-              from catalogo.tipo_incapacidad
+              from catalogo.edic_tipo_incapacidad
              where ind_activo = true
              order by num_orden, id_tipo_incapacidad
             """)
@@ -119,7 +119,7 @@ public interface CatalogoMapper {
                    num_orden as orden,
                    null::bigint as id_padre,
                    null::varchar as referencia
-              from catalogo.tipo_riesgo
+              from catalogo.edic_tipo_riesgo
              where ind_activo = true
              order by num_orden, id_tipo_riesgo
             """)

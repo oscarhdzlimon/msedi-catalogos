@@ -71,7 +71,7 @@ class CatalogoServiceImplTest {
 
     @Test
     void rechazaClaveNoSoportadaSinInvocarSqlDinamico() {
-        assertThatThrownBy(() -> service.consultar("catalogo.evento"))
+        assertThatThrownBy(() -> service.consultar("catalogo-no-soportado"))
                 .isInstanceOf(EdiException.class)
                 .extracting("codigo")
                 .isEqualTo("CATALOGO_NO_SOPORTADO");
