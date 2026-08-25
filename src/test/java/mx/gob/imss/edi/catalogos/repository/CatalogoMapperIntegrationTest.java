@@ -18,22 +18,22 @@ class CatalogoMapperIntegrationTest {
     @Test
     void mapeaElContratoCompletoEnTodasLasConsultas() {
         assertThat(mapper.consultarClasificacionesIncapacidad())
-                .containsExactly(new CatalogoItemDto(1L, null, "Clasificacion", 1, null, null));
+                .containsExactly(new CatalogoItemDto(1L, "CLASIFICACION", "Clasificacion", 1, null, null));
         assertThat(mapper.consultarEstatus())
-                .containsExactly(new CatalogoItemDto(2L, null, "Activo", null, 20L, null));
+                .containsExactly(new CatalogoItemDto(2L, "ACTIVO", "Activo", null, 20L, null));
         assertThat(mapper.consultarPerfiles())
                 .containsExactly(new CatalogoItemDto(3L, "MED", "Medico", null, null, null));
         assertThat(mapper.consultarRamosSeguro())
                 .containsExactly(new CatalogoItemDto(4L, "EG", "Enfermedad general", 1, null, null));
         assertThat(mapper.consultarTiposDocumento())
-                .containsExactly(new CatalogoItemDto(5L, null, "Documento", null, null, "^[0-9]+$"));
+                .containsExactly(new CatalogoItemDto(5L, "DOCUMENTO", "Documento", null, null, "^[0-9]+$"));
         assertThat(mapper.consultarTiposEstatus())
-                .containsExactly(new CatalogoItemDto(6L, null, "Tipo estatus", null, null, null));
+                .containsExactly(new CatalogoItemDto(6L, "TIPO_ESTATUS", "Tipo estatus", null, null, null));
         assertThat(mapper.consultarTiposIdentificacion())
-                .containsExactly(new CatalogoItemDto(7L, null, "INE", 1, null, null));
+                .containsExactly(new CatalogoItemDto(7L, "INE_IFE", "INE", 1, null, null));
         assertThat(mapper.consultarTiposIncapacidad())
-                .containsExactly(new CatalogoItemDto(8L, null, "Inicial", 1, null, null));
+                .containsExactly(new CatalogoItemDto(8L, "INICIAL", "Inicial", 1, null, null));
         assertThat(mapper.consultarTiposRiesgo())
-                .containsExactly(new CatalogoItemDto(9L, null, "Accidente de trabajo", 1, null, null));
+                .containsExactly(new CatalogoItemDto(9L, "ACCIDENTE_TRABAJO", "Accidente de trabajo", 1, null, null));
     }
 }

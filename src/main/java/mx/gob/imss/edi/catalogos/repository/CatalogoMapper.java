@@ -10,7 +10,7 @@ public interface CatalogoMapper {
 
     @Select("""
             select id_clasif_incapacidad as id,
-                   null::varchar as clave,
+                   cve_clasif_incapacidad as clave,
                    des_clasif_incapacidad as descripcion,
                    num_orden as orden,
                    null::bigint as id_padre,
@@ -23,7 +23,7 @@ public interface CatalogoMapper {
 
     @Select("""
             select id_estatus as id,
-                   null::varchar as clave,
+                   cve_estatus as clave,
                    des_estatus as descripcion,
                    null::integer as orden,
                    id_tipo_estatus as id_padre,
@@ -62,7 +62,7 @@ public interface CatalogoMapper {
 
     @Select("""
             select id_tipo_documento as id,
-                   null::varchar as clave,
+                   cve_tipo_documento as clave,
                    des_tipo_documento as descripcion,
                    null::integer as orden,
                    null::bigint as id_padre,
@@ -75,7 +75,7 @@ public interface CatalogoMapper {
 
     @Select("""
             select id_tipo_estatus as id,
-                   null::varchar as clave,
+                   cve_tipo_estatus as clave,
                    des_tipo_estatus as descripcion,
                    null::integer as orden,
                    null::bigint as id_padre,
@@ -88,7 +88,7 @@ public interface CatalogoMapper {
 
     @Select("""
             select id_tipo_identificacion as id,
-                   null::varchar as clave,
+                   cve_tipo_identificacion as clave,
                    des_tipo_identificacion as descripcion,
                    num_orden as orden,
                    null::bigint as id_padre,
@@ -101,7 +101,7 @@ public interface CatalogoMapper {
 
     @Select("""
             select id_tipo_incapacidad as id,
-                   null::varchar as clave,
+                   cve_tipo_incapacidad as clave,
                    des_tipo_incapacidad as descripcion,
                    num_orden as orden,
                    null::bigint as id_padre,
@@ -114,7 +114,7 @@ public interface CatalogoMapper {
 
     @Select("""
             select id_tipo_riesgo as id,
-                   null::varchar as clave,
+                   cve_tipo_riesgo as clave,
                    des_tipo_riesgo as descripcion,
                    num_orden as orden,
                    null::bigint as id_padre,
