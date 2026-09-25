@@ -22,6 +22,19 @@ public interface CatalogoMapper {
     List<CatalogoItemDto> consultarClasificacionesIncapacidad();
 
     @Select("""
+            select id_dia_descanso as id,
+                   cve_dia as clave,
+                   des_dia as descripcion,
+                   id_dia_descanso as orden,
+                   null::bigint as id_padre,
+                   null::varchar as referencia
+              from catalogo.edic_dia_descanso
+             where ind_activo = true
+             order by id_dia_descanso
+            """)
+    List<CatalogoItemDto> consultarDiasDescanso();
+
+    @Select("""
             select id_estatus as id,
                    cve_estatus as clave,
                    des_estatus as descripcion,

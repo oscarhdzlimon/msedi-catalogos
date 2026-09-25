@@ -19,6 +19,8 @@ class CatalogoMapperIntegrationTest {
     void mapeaElContratoCompletoEnTodasLasConsultas() {
         assertThat(mapper.consultarClasificacionesIncapacidad())
                 .containsExactly(new CatalogoItemDto(1L, "CLASIFICACION", "Clasificacion", 1, null, null));
+        assertThat(mapper.consultarDiasDescanso())
+                .containsExactly(new CatalogoItemDto(1L, "LUN", "Lunes", 1, null, null));
         assertThat(mapper.consultarEstatus())
                 .containsExactly(new CatalogoItemDto(2L, "ACTIVO", "Activo", null, 20L, null));
         assertThat(mapper.consultarPerfiles())

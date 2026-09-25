@@ -31,6 +31,7 @@ class CatalogoServiceImplTest {
     @Test
     void delegaCadaClaveAlMetodoExplicito() {
         service.consultar("clasif-incapacidad");
+        service.consultar("dia-descanso");
         service.consultar("estatus");
         service.consultar("perfil");
         service.consultar("ramo-seguro");
@@ -41,6 +42,7 @@ class CatalogoServiceImplTest {
         service.consultar("tipo-riesgo");
 
         verify(mapper).consultarClasificacionesIncapacidad();
+        verify(mapper).consultarDiasDescanso();
         verify(mapper).consultarEstatus();
         verify(mapper).consultarPerfiles();
         verify(mapper).consultarRamosSeguro();

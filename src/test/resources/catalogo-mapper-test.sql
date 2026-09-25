@@ -1,5 +1,6 @@
 create schema if not exists catalogo;
 
+drop table if exists catalogo.edic_dia_descanso;
 drop table if exists catalogo.edic_clasif_incapacidad;
 drop table if exists catalogo.edic_estatus;
 drop table if exists catalogo.edic_perfil;
@@ -15,6 +16,12 @@ create table catalogo.edic_clasif_incapacidad (
   cve_clasif_incapacidad varchar(50),
   des_clasif_incapacidad varchar(100),
   num_orden integer,
+  ind_activo boolean
+);
+create table catalogo.edic_dia_descanso (
+  id_dia_descanso smallint primary key,
+  cve_dia varchar(3),
+  des_dia varchar(20),
   ind_activo boolean
 );
 create table catalogo.edic_estatus (
@@ -73,6 +80,7 @@ create table catalogo.edic_tipo_riesgo (
 );
 
 insert into catalogo.edic_clasif_incapacidad values (1, 'CLASIFICACION', 'Clasificacion', 1, true);
+insert into catalogo.edic_dia_descanso values (1, 'LUN', 'Lunes', true);
 insert into catalogo.edic_estatus values (2, 'ACTIVO', 'Activo', 20, true);
 insert into catalogo.edic_perfil values (3, 'MED', 'Medico', true);
 insert into catalogo.edic_ramo_seguro values (4, 'EG', 'Enfermedad general', 1, true);

@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 class CatalogoClaveTest {
 
     @Test
-    void contieneLasNueveClavesPermitidas() {
-        assertThat(CatalogoClave.values()).hasSize(9);
+    void contieneLasDiezClavesPermitidas() {
+        assertThat(CatalogoClave.values()).hasSize(10);
         Arrays.stream(CatalogoClave.values())
                 .forEach(clave -> assertThat(CatalogoClave.buscar(clave.getClaveApi())).contains(clave));
     }
