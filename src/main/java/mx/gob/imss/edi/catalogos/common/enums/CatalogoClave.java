@@ -6,6 +6,7 @@ import java.util.Optional;
 public enum CatalogoClave {
     CLASIF_INCAPACIDAD("clasif-incapacidad"),
     DIA_DESCANSO("dia-descanso"),
+    ESTADO_CIVIL("estado-civil"),
     ESTATUS("estatus"),
     PERFIL("perfil"),
     RAMO_SEGURO("ramo-seguro"),

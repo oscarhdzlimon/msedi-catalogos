@@ -76,6 +76,7 @@ Un catalogo valido sin registros activos devuelve HTTP `200` y `elementos: []`.
 | Clave de API | Tabla Postgres | Orden |
 | --- | --- | --- |
 | `clasif-incapacidad` | `catalogo.edic_clasif_incapacidad` | `num_orden, id_clasif_incapacidad` |
+| `estado-civil` | `catalogo.edic_estado_civil` | `num_orden, id_estado_civil` |
 | `estatus` | `catalogo.edic_estatus` | `des_estatus, id_estatus` |
 | `perfil` | `catalogo.edic_perfil` | `des_perfil, id_perfil` |
 | `ramo-seguro` | `catalogo.edic_ramo_seguro` | `num_orden, id_ramo_seguro` |
@@ -130,6 +131,7 @@ Mapeo especial:
 ```text
 CatalogoClave
   CLASIF_INCAPACIDAD("clasif-incapacidad")
+  ESTADO_CIVIL("estado-civil")
   ESTATUS("estatus")
   PERFIL("perfil")
   RAMO_SEGURO("ramo-seguro")
@@ -184,7 +186,7 @@ POST /msedi-autenticacion/api/v1/accesos/intercambio
 
 - Postgres, esquema `catalogo`.
 - MyBatis con SQL explicito y nombres calificados por esquema.
-- Usuario de base con `USAGE` en el esquema y `SELECT` solo en las nueve tablas expuestas.
+- Usuario de base con `USAGE` en el esquema y `SELECT` solo en las tablas expuestas.
 - Sin permisos de escritura o DDL para el usuario de aplicacion.
 - Mientras desarrollo use el owner, los permisos restringidos se consideran objetivo de despliegue.
 
@@ -226,6 +228,7 @@ mx.gob.imss.edi.catalogos
 
 ```text
 consultarClasificacionesIncapacidad()
+consultarEstadosCiviles()
 consultarEstatus()
 consultarPerfiles()
 consultarRamosSeguro()
@@ -293,7 +296,7 @@ edi:
 
 Pruebas unitarias:
 
-- Resolver las nueve claves permitidas.
+- Resolver las claves permitidas.
 - Rechazar claves desconocidas.
 - Delegar cada clave al metodo MyBatis correcto.
 - Validar ausencia o diferencia de `X-Transaccion-Id`.
@@ -301,7 +304,7 @@ Pruebas unitarias:
 
 Pruebas de integracion:
 
-- Consultar los nueve catalogos con Postgres Testcontainers.
+- Consultar los catalogos permitidos con Postgres Testcontainers.
 - Comprobar registros activos y orden.
 - Comprobar lista vacia para un catalogo valido.
 - Comprobar respuestas `400`, `401`, `403` y `503`.
@@ -319,7 +322,7 @@ Pruebas de integracion:
 
 ## Decisiones pendientes
 
-- Confirmar cuales de los nueve catalogos se utilizan en HU001-HU012 al cerrar el contrato de los 28 campos.
+- Confirmar cuales de los catalogos permitidos se utilizan en HU001-HU012 al cerrar el contrato de los 28 campos.
 
 
 ## Decisiones implementadas
@@ -328,3 +331,11 @@ Pruebas de integracion:
 - Los errores tecnicos se conservan en el log operativo con `X-Correlacion-Id`.
 - Cada clave delega a un metodo MyBatis con SQL explicito; no existe sustitucion de nombres de tabla desde la URL.
 - Las consultas se ejecutan en transacciones de solo lectura y el pool JDBC se configura como `read-only`.
+
+
+## Estado civil SIST (2026-10-20)
+
+GET /api/v1/catalogos/estado-civil devuelve registros activos en orden institucional.
+Claves e ids coinciden con SIST: 1 SOLTERO, 2 CASADO, 3 VIUDO, 4 DIVORCIADO, 5 UNIÓN LIBRE.
+El frontend usa descripcion para mostrar y clave para estadoCivil. La clave se conserva como string numérico en el contrato interno y se resuelve a id_estado_civil (FK) al registrar la información clínica. La conversión al tipo numérico del contrato institucional corresponderá al adaptador real SIST.
+Aplicar manualmente config/sql/20261020_catalogo_estado_civil_sist.sql desde la raíz EDI, como owner, antes de desplegar. No hay DDL ni carga automática desde la aplicación.

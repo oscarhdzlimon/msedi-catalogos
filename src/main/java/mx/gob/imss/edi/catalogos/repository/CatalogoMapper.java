@@ -137,4 +137,16 @@ public interface CatalogoMapper {
              order by num_orden, id_tipo_riesgo
             """)
     List<CatalogoItemDto> consultarTiposRiesgo();
+    @Select("""
+            select id_estado_civil as id,
+                   cve_estado_civil as clave,
+                   des_estado_civil as descripcion,
+                   num_orden as orden,
+                   null::bigint as id_padre,
+                   null::varchar as referencia
+              from catalogo.edic_estado_civil
+             where ind_activo = true
+             order by num_orden, id_estado_civil
+            """)
+    List<CatalogoItemDto> consultarEstadosCiviles();
 }

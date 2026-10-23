@@ -12,4 +12,6 @@
 | tipo-incapacidad | Sprint posterior | `catalogo.edic_tipo_incapacidad` |
 | tipo-riesgo | Sprint posterior | `catalogo.edic_tipo_riesgo` |
 
+| estado-civil | HU029 / RN029 fase 2, captura ST-7; claves SIST 1 a 5 | `catalogo.edic_estado_civil` |
+
 La tabla refleja capacidad disponible, no obliga a Angular a consultar todos los catalogos en HU001-HU012.

@@ -23,6 +23,7 @@ public class CatalogoServiceImpl implements CatalogoService {
         consultas = new EnumMap<>(CatalogoClave.class);
         consultas.put(CatalogoClave.CLASIF_INCAPACIDAD, mapper::consultarClasificacionesIncapacidad);
         consultas.put(CatalogoClave.DIA_DESCANSO, mapper::consultarDiasDescanso);
+        consultas.put(CatalogoClave.ESTADO_CIVIL, mapper::consultarEstadosCiviles);
         consultas.put(CatalogoClave.ESTATUS, mapper::consultarEstatus);
         consultas.put(CatalogoClave.PERFIL, mapper::consultarPerfiles);
         consultas.put(CatalogoClave.RAMO_SEGURO, mapper::consultarRamosSeguro);
