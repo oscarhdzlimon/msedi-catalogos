@@ -75,6 +75,7 @@ Un catalogo valido sin registros activos devuelve HTTP `200` y `elementos: []`.
 
 | Clave de API | Tabla Postgres | Orden |
 | --- | --- | --- |
+| `carga-trabajo` | `catalogo.edic_actividad_economica` + `catalogo.edic_carga_trabajo` | Una carga por `fraccionEmpresa` |
 | `clasif-incapacidad` | `catalogo.edic_clasif_incapacidad` | `num_orden, id_clasif_incapacidad` |
 | `estado-civil` | `catalogo.edic_estado_civil` | `num_orden, id_estado_civil` |
 | `estatus` | `catalogo.edic_estatus` | `des_estatus, id_estatus` |
@@ -319,6 +320,37 @@ Pruebas de integracion:
 - No se exponen catalogos internos.
 - No se implementan altas, modificaciones ni bajas.
 - No se usa Feign Client.
+
+## Carga de trabajo por actividad económica (2026-10-26)
+
+`GET /api/v1/catalogos/carga-trabajo?fraccionEmpresa=3510` utiliza la fracción
+del patrón seleccionado de Historia Laboral, no su giro. Conserva la seguridad
+JWT, transacción y correlación del endpoint existente. Solo consultas MyBatis;
+la aplicación no crea ni carga tablas al iniciar.
+
+- `fraccionEmpresa` es obligatorio para esta clave: entero de 0 a 9999; se
+  normaliza a la representación decimal del catálogo. Ausencia o formato inválido:
+  HTTP 400, `FRACCION_EMPRESA_INVALIDA`.
+- IDs fijos: 1 Liviano, 2 Moderado, 3 Pesado.
+- Respuesta normalizada: `claveCatalogo: "carga-trabajo"`, cero o un elemento;
+  `id` es la carga, `clave` su ID textual, `descripcion` su nombre, `orden` su ID
+  y `referencia` la clave de actividad económica.
+- Ejemplo 3510: `id: 3`, `clave: "3"`, `descripcion: "Pesado"`, `referencia: "3510"`.
+- Actividad inexistente, sin carga (clave 0), actividad inactiva o carga inactiva:
+  HTTP 200 y `elementos: []`. Falla de base: HTTP 503; no convertirla en ausencia.
+- Fuente autorizada: catálogo de julio 2026, 292 actividades, 3 cargas;
+  carga manual `config/sql/20261026_catalogo_actividad_carga.sql` desde raíz EDI,
+  con auditoría en ambas tablas. La clave de actividad es PK y la carga es FK.
+- El front asigna automáticamente el único resultado por `fraccionEmpresa`,
+  limpia carga y sugerencia al cambiar patrón, cancela respuestas anteriores y
+  ofrece reintento ante falla técnica. No presenta tres opciones de demostración.
+  Impide construir el registro mientras la consulta está en curso o con error;
+  al construir el payload HINC utiliza el ID resuelto, no una carga de la precarga.
+- Tras integrar el front actualizado (commit base `4f94085`), los días se consultan
+  mediante `GuiasIttApiService` en `POST /msedi-expedicion/api/v1/guias-itt/calcular`.
+  Los IDs 1/2/3 del catálogo se traducen a `liviano`/`moderado`/`pesado` para ese
+  contrato. Se conservan diagnóstico, edad, diabetes e hipertensión; los días
+  mostrados son los devueltos por la consulta, sin valores locales de demostración.
 
 ## Decisiones pendientes
 

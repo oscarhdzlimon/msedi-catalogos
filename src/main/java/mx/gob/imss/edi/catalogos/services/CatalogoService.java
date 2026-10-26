@@ -5,4 +5,6 @@ import mx.gob.imss.edi.catalogos.models.response.CatalogoResponseDto;
 public interface CatalogoService {
 
     CatalogoResponseDto consultar(String claveCatalogo);
+
+    CatalogoResponseDto consultar(String claveCatalogo, String fraccionEmpresa);
 }

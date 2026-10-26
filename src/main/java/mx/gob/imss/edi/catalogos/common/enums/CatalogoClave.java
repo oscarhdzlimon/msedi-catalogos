@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public enum CatalogoClave {
+    CARGA_TRABAJO("carga-trabajo"),
     CLASIF_INCAPACIDAD("clasif-incapacidad"),
     DIA_DESCANSO("dia-descanso"),
     ESTADO_CIVIL("estado-civil"),

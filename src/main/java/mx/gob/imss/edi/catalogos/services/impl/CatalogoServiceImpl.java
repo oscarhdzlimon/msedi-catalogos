@@ -18,8 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class CatalogoServiceImpl implements CatalogoService {
 
     private final Map<CatalogoClave, Supplier<List<CatalogoItemDto>>> consultas;
+    private final CatalogoMapper mapper;
 
     public CatalogoServiceImpl(CatalogoMapper mapper) {
+        this.mapper = mapper;
         consultas = new EnumMap<>(CatalogoClave.class);
         consultas.put(CatalogoClave.CLASIF_INCAPACIDAD, mapper::consultarClasificacionesIncapacidad);
         consultas.put(CatalogoClave.DIA_DESCANSO, mapper::consultarDiasDescanso);
@@ -37,12 +39,27 @@ public class CatalogoServiceImpl implements CatalogoService {
     @Override
     @Transactional(readOnly = true)
     public CatalogoResponseDto consultar(String claveCatalogo) {
+        return consultar(claveCatalogo, null);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public CatalogoResponseDto consultar(String claveCatalogo, String fraccionEmpresa) {
         CatalogoClave clave = CatalogoClave.buscar(claveCatalogo)
                 .orElseThrow(() -> new EdiException(
                         HttpStatus.BAD_REQUEST,
                         "CATALOGO_NO_SOPORTADO",
                         "El catalogo solicitado no esta soportado"));
-        List<CatalogoItemDto> elementos = consultas.get(clave).get();
+        List<CatalogoItemDto> elementos;
+        if (clave == CatalogoClave.CARGA_TRABAJO) {
+            if (fraccionEmpresa == null || !fraccionEmpresa.matches("[0-9]{1,4}")) {
+                throw new EdiException(HttpStatus.BAD_REQUEST, "FRACCION_EMPRESA_INVALIDA",
+                        "La fraccion de empresa debe ser un entero entre 0 y 9999");
+            }
+            elementos = mapper.consultarCargaTrabajo(Integer.toString(Integer.parseInt(fraccionEmpresa)));
+        } else {
+            elementos = consultas.get(clave).get();
+        }
         return new CatalogoResponseDto(clave.getClaveApi(), elementos == null ? List.of() : List.copyOf(elementos));
     }
 }

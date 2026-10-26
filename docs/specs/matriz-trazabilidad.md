@@ -13,5 +13,6 @@
 | tipo-riesgo | Sprint posterior | `catalogo.edic_tipo_riesgo` |
 
 | estado-civil | HU029 / RN029 fase 2, captura ST-7; claves SIST 1 a 5 | `catalogo.edic_estado_civil` |
+| carga-trabajo | Captura de expedición / apoyo HU032; consulta por fraccionEmpresa del patrón seleccionado | `catalogo.edic_actividad_economica`, `catalogo.edic_carga_trabajo` |
 
 La tabla refleja capacidad disponible, no obliga a Angular a consultar todos los catalogos en HU001-HU012.

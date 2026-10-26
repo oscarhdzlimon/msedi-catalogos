@@ -3,10 +3,28 @@ package mx.gob.imss.edi.catalogos.repository;
 import java.util.List;
 import mx.gob.imss.edi.catalogos.models.dto.CatalogoItemDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface CatalogoMapper {
+
+    @Select("""
+            select c.id_carga_trabajo as id,
+                   cast(c.id_carga_trabajo as varchar) as clave,
+                   c.des_carga_trabajo as descripcion,
+                   c.id_carga_trabajo as orden,
+                   null::bigint as id_padre,
+                   a.cve_actividad_economica as referencia
+              from catalogo.edic_actividad_economica a
+              join catalogo.edic_carga_trabajo c
+                on c.id_carga_trabajo = a.id_carga_trabajo
+             where a.cve_actividad_economica = #{fraccionEmpresa}
+               and a.ind_activo = true
+               and c.ind_activo = true
+             order by c.id_carga_trabajo
+            """)
+    List<CatalogoItemDto> consultarCargaTrabajo(@Param("fraccionEmpresa") String fraccionEmpresa);
 
     @Select("""
             select id_clasif_incapacidad as id,

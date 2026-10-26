@@ -14,6 +14,7 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import mx.gob.imss.edi.catalogos.models.response.CatalogoResponseDto;
+import mx.gob.imss.edi.catalogos.models.dto.CatalogoItemDto;
 import mx.gob.imss.edi.catalogos.services.CatalogoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,29 @@ class CatalogoControllerSecurityTest {
                 .andExpect(header().string("X-Correlacion-Id", "corr-1"))
                 .andExpect(jsonPath("$.exito").value(true))
                 .andExpect(jsonPath("$.respuesta.claveCatalogo").value("perfil"));
+    }
+
+    @Test
+    void consultaCargaPorFraccionConSeguridadYContratoNormalizado() throws Exception {
+        when(catalogoService.consultar("carga-trabajo", "3510"))
+                .thenReturn(new CatalogoResponseDto("carga-trabajo", List.of(
+                        new CatalogoItemDto(3L, "3", "Pesado", 3, null, "3510"))));
+        mockMvc.perform(get("/api/v1/catalogos/carga-trabajo").param("fraccionEmpresa", "3510")
+                        .header("Authorization", "Bearer " + token(12L))
+                        .header("X-Transaccion-Id", "12"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.respuesta.elementos.length()").value(1))
+                .andExpect(jsonPath("$.respuesta.elementos[0].id").value(3))
+                .andExpect(jsonPath("$.respuesta.elementos[0].descripcion").value("Pesado"))
+                .andExpect(jsonPath("$.respuesta.elementos[0].referencia").value("3510"))
+                .andExpect(jsonPath("$.respuesta.elementos[0].stp_alta").doesNotExist());
+        mockMvc.perform(get("/api/v1/catalogos/carga-trabajo").param("fraccionEmpresa", "3510")
+                        .header("X-Transaccion-Id", "12"))
+                .andExpect(status().isUnauthorized());
+        mockMvc.perform(get("/api/v1/catalogos/carga-trabajo").param("fraccionEmpresa", "3510")
+                        .header("Authorization", "Bearer " + token(12L))
+                        .header("X-Transaccion-Id", "13"))
+                .andExpect(status().isForbidden());
     }
 
     private String token(Long idTransaccion) {
