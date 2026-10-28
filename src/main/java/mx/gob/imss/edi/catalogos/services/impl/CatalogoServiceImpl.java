@@ -1,5 +1,7 @@
 package mx.gob.imss.edi.catalogos.services.impl;
 
+import mx.gob.imss.edi.catalogos.common.enums.MensajeEdi;
+
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -48,13 +50,13 @@ public class CatalogoServiceImpl implements CatalogoService {
         CatalogoClave clave = CatalogoClave.buscar(claveCatalogo)
                 .orElseThrow(() -> new EdiException(
                         HttpStatus.BAD_REQUEST,
-                        "CATALOGO_NO_SOPORTADO",
-                        "El catalogo solicitado no esta soportado"));
+                        MensajeEdi.CATALOGO_NO_SOPORTADO.codigo(),
+                        MensajeEdi.CATALOGO_NO_SOPORTADO.textoRespaldo()));
         List<CatalogoItemDto> elementos;
         if (clave == CatalogoClave.CARGA_TRABAJO) {
             if (fraccionEmpresa == null || !fraccionEmpresa.matches("[0-9]{1,4}")) {
-                throw new EdiException(HttpStatus.BAD_REQUEST, "FRACCION_EMPRESA_INVALIDA",
-                        "La fraccion de empresa debe ser un entero entre 0 y 9999");
+                throw new EdiException(HttpStatus.BAD_REQUEST, MensajeEdi.FRACCION_EMPRESA_INVALIDA.codigo(),
+                        MensajeEdi.FRACCION_EMPRESA_INVALIDA.textoRespaldo());
             }
             elementos = mapper.consultarCargaTrabajo(Integer.toString(Integer.parseInt(fraccionEmpresa)));
         } else {

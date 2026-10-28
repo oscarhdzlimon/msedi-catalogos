@@ -371,3 +371,12 @@ GET /api/v1/catalogos/estado-civil devuelve registros activos en orden instituci
 Claves e ids coinciden con SIST: 1 SOLTERO, 2 CASADO, 3 VIUDO, 4 DIVORCIADO, 5 UNIÓN LIBRE.
 El frontend usa descripcion para mostrar y clave para estadoCivil. La clave se conserva como string numérico en el contrato interno y se resuelve a id_estado_civil (FK) al registrar la información clínica. La conversión al tipo numérico del contrato institucional corresponderá al adaptador real SIST.
 Aplicar manualmente config/sql/20261020_catalogo_estado_civil_sist.sql desde la raíz EDI, como owner, antes de desplegar. No hay DDL ni carga automática desde la aplicación.
+
+## Centralización de mensajes
+
+Los códigos y respaldos utilizados por el micro se referencian desde el enum local
+`common.enums.MensajeEdi`, tanto en excepciones como en auditoría y respuestas.
+Los resolutores conservan la prioridad del texto activo en PostgreSQL; el enum no
+sustituye la base ni restringe mensajes dinámicos recibidos de otros servicios.
+Las variantes DETALLE mantienen el texto específico del contexto, sin crear claves
+nuevas. Esta refactorización no cambia estados HTTP, contratos ni reglas funcionales.

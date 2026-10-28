@@ -1,5 +1,7 @@
 package mx.gob.imss.edi.catalogos.exceptions;
 
+import mx.gob.imss.edi.catalogos.common.enums.MensajeEdi;
+
 import jakarta.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 import java.time.OffsetDateTime;
@@ -52,18 +54,18 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DataAccessException.class)
     public ResponseEntity<ApiErrorResponse> handleDatabase(DataAccessException exception, HttpServletRequest request) {
-        logException(HttpStatus.SERVICE_UNAVAILABLE, "CATALOGO_NO_DISPONIBLE",
-                "El catalogo no se encuentra disponible", request, exception);
-        return build(HttpStatus.SERVICE_UNAVAILABLE, "CATALOGO_NO_DISPONIBLE",
-                "El catalogo no se encuentra disponible", request);
+        logException(HttpStatus.SERVICE_UNAVAILABLE, MensajeEdi.CATALOGO_NO_DISPONIBLE.codigo(),
+                MensajeEdi.CATALOGO_NO_DISPONIBLE.textoRespaldo(), request, exception);
+        return build(HttpStatus.SERVICE_UNAVAILABLE, MensajeEdi.CATALOGO_NO_DISPONIBLE.codigo(),
+                MensajeEdi.CATALOGO_NO_DISPONIBLE.textoRespaldo(), request);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiErrorResponse> handleUnexpected(Exception exception, HttpServletRequest request) {
-        logException(HttpStatus.INTERNAL_SERVER_ERROR, "ERROR_INTERNO",
-                "Ocurrio un error interno al procesar la solicitud", request, exception);
-        return build(HttpStatus.INTERNAL_SERVER_ERROR, "ERROR_INTERNO",
-                "Ocurrio un error interno al procesar la solicitud", request);
+        logException(HttpStatus.INTERNAL_SERVER_ERROR, MensajeEdi.ERROR_INTERNO.codigo(),
+                MensajeEdi.ERROR_INTERNO.textoRespaldo(), request, exception);
+        return build(HttpStatus.INTERNAL_SERVER_ERROR, MensajeEdi.ERROR_INTERNO.codigo(),
+                MensajeEdi.ERROR_INTERNO.textoRespaldo(), request);
     }
 
     private ResponseEntity<ApiErrorResponse> build(

@@ -56,3 +56,18 @@ PostgreSQL con \`America/Mexico_City\`. En OpenShift tambien se recomienda
 \`TZ=America/Mexico_City\` para que el proceso tenga la zona correcta desde su
 arranque.
 
+
+
+## Referencias de mensajes mediante enum local
+
+`common.enums.MensajeEdi` centraliza los códigos y textos de respaldo de este
+micro. Los servicios, excepciones y publicaciones a bitácora utilizan sus
+referencias; los códigos públicos y sus textos actuales se conservan.
+
+Los resolutores existentes siguen consultando primero `catalogo.edic_mensaje`.
+El enum aporta un respaldo para las rutas que ya lo utilizaban y para fallos
+técnicos donde la base no está disponible. Las variantes `DETALLE` conservan
+los diferentes contextos técnicos de un mismo código; no son códigos nuevos.
+Los mensajes recibidos de otros servicios y las búsquedas dinámicas en base
+siguen aceptando sus claves; el enum no se usa como una lista restrictiva.
+El catálogo y enum numérico del motor de riesgos no se migran en esta etapa.
